@@ -12,9 +12,12 @@ def main():
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
     pygame.init()
+    pygame.font.init()    
     game_clock = pygame.time.Clock()
     dt = 0
-    screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
+
+    fps_font   = pygame.font.SysFont(None, 30)
+    screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT), pygame.FULLSCREEN)
 
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
@@ -45,8 +48,11 @@ def main():
                     asteroid.split()
         for sprite in drawable:
             sprite.draw(screen)
+        fps = int(game_clock.get_fps())
+        fps_surf = fps_font.render(f"FPS: {fps}", True, (255, 255, 255))
+        screen.blit(fps_surf, (10, 10))
         pygame.display.flip()
-        dt = game_clock.tick(144)/1000
+        dt = game_clock.tick(240)/1000
 
 if __name__ == "__main__":
     main()
